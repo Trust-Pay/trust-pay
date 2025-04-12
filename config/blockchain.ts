@@ -1,10 +1,10 @@
 export const DEFAULT_CHAIN = {
   id: 5151,
   name: "Pharos Devnet",
-  network: "pharos ",
+  network: "Pharos Devnet",
   nativeCurrency: {
     name: "Pharos",
-    symbol: "PHR",
+    symbol: "pharos",
     decimals: 18,
   },
   rpcUrls: {

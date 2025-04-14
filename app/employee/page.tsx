@@ -161,7 +161,7 @@ export default function EmployeeDashboard() {
                                 <DollarSign className="h-6 w-6 text-white" />
                               </div>
                               <div>
-                                <div className="font-medium">StablePay ETF</div>
+                                <div className="font-medium">TrustPay ETF</div>
                                 <div className="text-xs text-muted-foreground">Backed by Gold, BTC, ETH</div>
                               </div>
                             </div>

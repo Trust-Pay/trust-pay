@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack(config) {
+    config.ignoreWarnings = [
+      {
+        //message: /.*/, // Ignore all warnings
+      },
+    ];
+    return config;
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -12,3 +20,4 @@ const nextConfig = {
 }
 
 export default nextConfig
+

@@ -21,7 +21,7 @@ export function Footer() {
                 <DollarSign className="h-6 w-6 text-white" />
               </div>
               <div className="font-bold text-xl">
-                <GradientText preset="blue-purple">StablePay ETF</GradientText>
+                <GradientText preset="blue-purple">TrustPay ETF</GradientText>
               </div>
             </Link>
             <p className="text-sm text-muted-foreground">
@@ -120,7 +120,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">&copy; 2025 StablePay ETF. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">&copy; 2025 TrustPay ETF. All rights reserved.</p>
           <p className="text-sm text-muted-foreground">
             ETF Composition: <span className="text-yellow-500">50% Gold</span>,{" "}
             <span className="text-orange-500">25% BTC</span>, <span className="text-blue-500">25% ETH</span>

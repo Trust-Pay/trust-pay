@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GradientButton } from "@/components/ui/gradient-button"
 import { GradientText } from "@/components/ui/gradient-text"
+import { News } from "@/components/ui/news"
 import { Button } from "@/components/ui/button"
 import { fadeIn, staggerContainer, floatAnimation } from "@/lib/animations"
 import { ArrowRight, CheckCircle, DollarSign, Briefcase, LineChart, Shield, Clock, Globe } from "lucide-react"
@@ -61,7 +62,7 @@ export default function Home() {
                   </motion.h1>
 
                   <motion.p variants={fadeIn("up", 0.4)} className="text-lg text-muted-foreground max-w-xl">
-                    StablePay ETF is a blockchain-based payroll platform using a stablecoin backed by gold, BTC, and ETH
+                    TrustPay ETF is a blockchain-based payroll platform using a stablecoin backed by gold, BTC, and ETH
                     ETFs for secure, efficient, and innovative payroll processing.
                   </motion.p>
                 </div>
@@ -93,7 +94,7 @@ export default function Home() {
                     ))}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    <span className="font-medium text-foreground">500+</span> companies trust StablePay ETF
+                    <span className="font-medium text-foreground">500+</span> companies trust TrustPay ETF
                   </div>
                 </motion.div>
               </motion.div>
@@ -108,7 +109,7 @@ export default function Home() {
                             <DollarSign className="h-6 w-6 text-white" />
                           </div>
                           <div>
-                            <div className="font-medium">StablePay ETF</div>
+                            <div className="font-medium">TrustPay ETF</div>
                             <div className="text-xs text-muted-foreground">Backed by Gold, BTC, ETH</div>
                           </div>
                         </div>
@@ -223,7 +224,7 @@ export default function Home() {
               </motion.h2>
 
               <motion.p variants={fadeIn("up", 0.2)} className="text-muted-foreground">
-                StablePay ETF combines the stability of gold, the growth potential of BTC, and the utility of ETH to
+                TrustPay ETF combines the stability of gold, the growth potential of BTC, and the utility of ETH to
                 create a revolutionary payroll solution.
               </motion.p>
             </motion.div>
@@ -389,7 +390,7 @@ export default function Home() {
                   >
                     <div className="relative z-10 space-y-6">
                       <div className="text-center">
-                        <h3 className="text-2xl font-bold mb-2">StablePay ETF Token</h3>
+                        <h3 className="text-2xl font-bold mb-2">TrustPay ETF Token</h3>
                         <p className="text-sm text-muted-foreground">A diversified portfolio in a single token</p>
                       </div>
 
@@ -455,7 +456,7 @@ export default function Home() {
               </motion.h2>
 
               <motion.p variants={fadeIn("up", 0.2)} className="text-muted-foreground">
-                StablePay ETF makes payroll processing easier for employers and provides investment opportunities for
+                TrustPay ETF makes payroll processing easier for employers and provides investment opportunities for
                 employees.
               </motion.p>
             </motion.div>
@@ -503,6 +504,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* News Section */}
+        <News/>
+        
         {/* CTA Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
@@ -522,7 +526,7 @@ export default function Home() {
                 <div className="text-white space-y-4 max-w-xl">
                   <h2 className="text-3xl md:text-4xl font-bold">Ready to Transform Your Payroll?</h2>
                   <p className="text-white/80">
-                    Join hundreds of companies already using StablePay ETF to streamline their payroll process and
+                    Join hundreds of companies already using TrustPay ETF to streamline their payroll process and
                     empower their employees.
                   </p>
                   <div className="flex flex-wrap gap-4 pt-2">

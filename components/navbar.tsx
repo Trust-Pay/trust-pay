@@ -51,7 +51,7 @@ export function Navbar() {
               <DollarSign className="h-6 w-6 text-white" />
             </motion.div>
             <div className="font-bold text-xl">
-              <GradientText preset="blue-purple">StablePay ETF</GradientText>
+              <GradientText preset="blue-purple">TrustPay ETF</GradientText>
             </div>
           </Link>
 

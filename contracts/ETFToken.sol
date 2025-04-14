@@ -31,7 +31,7 @@ contract ETFToken is ERC20, AccessControl, Pausable {
     event PricesUpdated(uint256 goldPrice, uint256 btcPrice, uint256 ethPrice);
     event YieldDistributed(address indexed recipient, uint256 amount);
     
-    constructor() ERC20("StablePay ETF Token", "SPETF") {
+    constructor() ERC20("TrustPay ETF Token", "SPETF") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(BURNER_ROLE, msg.sender);

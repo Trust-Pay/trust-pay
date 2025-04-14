@@ -21,7 +21,7 @@ contract SPAYStablecoin is ERC20, AccessControl, Pausable {
     event Verified(address indexed user);
     event Unverified(address indexed user);
     
-    constructor() ERC20("StablePay", "SPAY") {
+    constructor() ERC20("TrustPay", "SPAY") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(BURNER_ROLE, msg.sender);

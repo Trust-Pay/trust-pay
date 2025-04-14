@@ -1,4 +1,4 @@
-# StablePay ETF
+# TrustPay ETF
 
 A blockchain-based payroll platform using a stablecoin backed by gold, BTC, and ETH ETFs for secure, efficient, and innovative payroll processing.
 
@@ -27,20 +27,19 @@ A blockchain-based payroll platform using a stablecoin backed by gold, BTC, and 
 ## Prerequisites
 
 - Node.js 18.0.0 or higher
-- PNPM package manager
 - MetaMask or compatible Web3 wallet
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/stablepay-etf.git
-cd stablepay-etf
+git clone https://github.com/repo-name/trust-pay.git
+cd trust-pay
 ```
 
 2. Install dependencies:
 ```bash
-pnpm install
+npm install
 ```
 
 3. Set up environment variables:
@@ -51,7 +50,7 @@ cp .env.example .env.local
 
 4. Start the development server:
 ```bash
-pnpm dev
+npm run dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
@@ -90,12 +89,8 @@ The project includes the following smart contracts:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](MIT_LICENSE.md) file for details.
 
 ## Support
 
 For support, please open an issue in the GitHub repository or contact our support team.
-
-## Security
-
-For security concerns, please email security@stablepay-etf.com

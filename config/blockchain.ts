@@ -1,5 +1,5 @@
 export const DEFAULT_CHAIN = {
-  id: 5151,
+  id: 50002,
   name: "Pharos Devnet",
   network: "Pharos Devnet",
   nativeCurrency: {

@@ -10,7 +10,6 @@ import { DollarSign, Menu, X, Moon, Sun, ExternalLink } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useWeb3 } from "@/providers/web3-provider"
 import { useSPAYToken } from "@/hooks/use-spay-token"
-import { DEFAULT_CHAIN } from "@/config/blockchain"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -27,10 +26,9 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen)
 
   const navItems = [
-    { name: "Home", href: "/" },
     { name: "Employer", href: "/employer" },
     { name: "Employee", href: "/employee" },
-    { name: "About", href: "/about" },
+    { name: "Join Waitlist", href: "https://form.typeform.com/to/vcGRVShj" },
   ]
 
   return (
@@ -58,15 +56,27 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm font-medium hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) =>
+                item.href.startsWith("http") ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -96,10 +106,18 @@ export function Navbar() {
                     {formatAddress(account)}
                     <ExternalLink className="h-3 w-3 ml-1" />
                   </Button>
-                  <div className="flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 text-sm text-emerald-700 dark:text-emerald-400">
-                    <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                    <span>{spayToken?.balance || "0"} SPAY</span>
-                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    onClick={() => {
+                      disconnectWallet();
+                      document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+                      window.location.href = "/";
+                    }}
+                  >
+                    Logout
+                  </Button>
                 </div>
               )}
             </div>
@@ -114,14 +132,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Network Badge */}
-      <div className="absolute top-0 right-0 m-3">
-        <div className="flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1 text-xs text-blue-700 dark:text-blue-400">
-          <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-          <span>{DEFAULT_CHAIN.name}</span>
-        </div>
-      </div>
-
       {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
@@ -133,16 +143,29 @@ export function Navbar() {
             className="md:hidden border-t border-white/10 backdrop-blur-lg"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm font-medium py-2 hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) =>
+                item.href.startsWith("http") ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium py-2 hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm font-medium py-2 hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
 
               {!isConnected ? (
                 <GradientButton

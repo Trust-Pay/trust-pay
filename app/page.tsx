@@ -84,19 +84,6 @@ export default function Home() {
                   </Button>
                 </motion.div>
 
-                <motion.div variants={fadeIn("up", 0.6)} className="flex flex-wrap items-center gap-6">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700"
-                      />
-                    ))}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    <span className="font-medium text-foreground">500+</span> companies trust TrustPay ETF
-                  </div>
-                </motion.div>
               </motion.div>
 
               <motion.div variants={fadeIn("left")} className="flex-1 relative">
@@ -535,7 +522,7 @@ export default function Home() {
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </GradientButton>
 
-                    <Button size="xl" variant="outline" className="border-white text-white hover:bg-white/10">
+                    <Button size="xl" variant="outline" className="border-white text-blue-600 hover:bg-white/10">
                       Schedule a Demo
                     </Button>
                   </div>

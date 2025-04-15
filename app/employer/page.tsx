@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { AddEmployeeModal } from "@/components/modals/add-employee-modal"
 import { fadeIn, staggerContainer } from "@/lib/animations"
 import {
   Briefcase,
@@ -39,12 +40,7 @@ export default function EmployerDashboard() {
     { address: "0xqrst...uvwx", name: "David Wilson", amount: 1800, lastPaid: "Apr 15, 2025", status: "Active" },
   ])
 
-  const [newEmployee, setNewEmployee] = useState({
-    name: "",
-    address: "",
-    amount: "",
-    schedule: "Bi-weekly",
-  })
+  const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false)
 
   const handlePayroll = async () => {
     if (!isConnected) {
@@ -65,9 +61,7 @@ export default function EmployerDashboard() {
     }
   }
 
-  const handleAddEmployee = async () => {
-    if (!newEmployee.name || !newEmployee.address || !newEmployee.amount) return
-
+  const handleAddEmployee = async (newEmployee: { name: string; address: string; amount: string; schedule: string }) => {
     if (!isConnected) {
       connectWallet()
       return
@@ -96,13 +90,7 @@ export default function EmployerDashboard() {
         },
       ])
 
-      // Reset the form
-      setNewEmployee({
-        name: "",
-        address: "",
-        amount: "",
-        schedule: "Bi-weekly",
-      })
+      setIsAddEmployeeModalOpen(false)
     }
   }
 
@@ -223,7 +211,7 @@ export default function EmployerDashboard() {
                         <Button variant="outline" size="icon">
                           <Upload className="h-4 w-4" />
                         </Button>
-                        <GradientButton className="gap-2">
+                        <GradientButton className="gap-2" onClick={() => setIsAddEmployeeModalOpen(true)}>
                           <PlusCircle className="h-4 w-4" />
                           Add Employee
                         </GradientButton>
@@ -276,63 +264,12 @@ export default function EmployerDashboard() {
                     </CardFooter>
                   </Card>
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Add New Employee</CardTitle>
-                      <CardDescription>Enter employee details to add them to your payroll</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Employee Name</label>
-                          <Input
-                            placeholder="Enter employee name"
-                            value={newEmployee.name}
-                            onChange={(e) => setNewEmployee({ ...newEmployee, name: e.target.value })}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Wallet Address</label>
-                          <Input
-                            placeholder="0x..."
-                            value={newEmployee.address}
-                            onChange={(e) => setNewEmployee({ ...newEmployee, address: e.target.value })}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Payroll Amount (SPAY)</label>
-                          <Input
-                            type="number"
-                            placeholder="1000"
-                            value={newEmployee.amount}
-                            onChange={(e) => setNewEmployee({ ...newEmployee, amount: e.target.value })}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Payment Schedule</label>
-                          <select
-                            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                            value={newEmployee.schedule}
-                            onChange={(e) => setNewEmployee({ ...newEmployee, schedule: e.target.value })}
-                          >
-                            <option>Bi-weekly</option>
-                            <option>Monthly</option>
-                            <option>Weekly</option>
-                          </select>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <GradientButton
-                        className="gap-2"
-                        onClick={handleAddEmployee}
-                        disabled={isProcessing || !newEmployee.name || !newEmployee.address || !newEmployee.amount}
-                      >
-                        <PlusCircle className="h-4 w-4" />
-                        {isProcessing ? "Processing..." : "Add Employee"}
-                      </GradientButton>
-                    </CardFooter>
-                  </Card>
+                  <AddEmployeeModal
+                    isOpen={isAddEmployeeModalOpen}
+                    onClose={() => setIsAddEmployeeModalOpen(false)}
+                    onSubmit={handleAddEmployee}
+                    isProcessing={isProcessing}
+                  />
                 </TabsContent>
 
                 <TabsContent value="transactions" className="space-y-6">

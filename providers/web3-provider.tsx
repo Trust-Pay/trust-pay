@@ -20,6 +20,7 @@ type Web3ContextType = {
   connectWallet: () => Promise<void>
   disconnectWallet: () => void
   formatAddress: (address: string | null) => string
+  viewOnExplorer: () => void
 }
 
 const Web3Context = createContext<Web3ContextType>({
@@ -30,6 +31,7 @@ const Web3Context = createContext<Web3ContextType>({
   connectWallet: async () => {},
   disconnectWallet: () => {},
   formatAddress: () => "",
+  viewOnExplorer: () => {},
 })
 
 export const useWeb3 = () => useContext(Web3Context)
@@ -40,16 +42,9 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
 
-  // Format address for display (handles XDC format)
+  // Format address for display
   const formatAddress = useCallback((address: string | null): string => {
     if (!address) return ""
-
-    // If it's an XDC address, use the XDC format for display
-    if (address.startsWith("xdc")) {
-      return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-    }
-
-    // Otherwise use the standard 0x format
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
   }, [])
 
@@ -71,17 +66,20 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
       const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
       const chainIdHex = await window.ethereum.request({ method: "eth_chainId" })
       const chainIdDecimal = Number.parseInt(chainIdHex, 16)
+      
+      // Set authentication cookie
+      document.cookie = `auth-token=${accounts[0]}; path=/`
 
-      // Check if we're on XDC Testnet (chainId 51)
+      // Check if we're on Pharos Devnet (chainId 50002)
       if (chainIdDecimal !== DEFAULT_CHAIN.id) {
         try {
-          // Try to switch to XDC Testnet
+          // Try to switch to Pharos Devnet
           await window.ethereum.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${DEFAULT_CHAIN.id.toString(16)}` }], // 51 in hex
+            params: [{ chainId: `0x${DEFAULT_CHAIN.id.toString(16)}` }], // 50002 in hex (0xC352)
           })
         } catch (switchError: any) {
-          // If XDC Testnet is not added to wallet, add it
+          // If Pharos Devnet is not added to wallet, add it
           if (switchError.code === 4902) {
             await window.ethereum.request({
               method: "wallet_addEthereumChain",
@@ -105,16 +103,14 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
       const updatedChainIdHex = await window.ethereum.request({ method: "eth_chainId" })
       const updatedChainIdDecimal = Number.parseInt(updatedChainIdHex, 16)
 
-      // Store the account address - convert to XDC format for consistency
-      const xdcAddress = accounts[0].startsWith("0x") ? convertAddressFormat(accounts[0]) : accounts[0]
-
-      setAccount(xdcAddress)
+      // Store the account address in its original format
+      setAccount(accounts[0])
       setChainId(updatedChainIdDecimal)
       setIsConnected(true)
 
       toast({
         title: "Wallet Connected",
-        description: `Connected to ${formatAddress(xdcAddress)}`,
+        description: `Connected to ${formatAddress(accounts[0])}`,
       })
     } catch (error) {
       console.error("Failed to connect wallet:", error)
@@ -148,13 +144,11 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
           // User disconnected their wallet
           disconnectWallet()
         } else if (accounts[0] !== account) {
-          // User switched accounts - convert to XDC format
-          const xdcAddress = accounts[0].startsWith("0x") ? convertAddressFormat(accounts[0]) : accounts[0]
-
-          setAccount(xdcAddress)
+          // User switched accounts
+          setAccount(accounts[0])
           toast({
             title: "Account Changed",
-            description: `Switched to ${formatAddress(xdcAddress)}`,
+            description: `Switched to ${formatAddress(accounts[0])}`,
           })
         }
       }
@@ -188,6 +182,14 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [account, disconnectWallet, formatAddress])
 
+  // View address on block explorer
+  const viewOnExplorer = useCallback(() => {
+    if (!account) return
+
+    const explorerUrl = `${DEFAULT_CHAIN.blockExplorers.default.url}/address/${account}`
+    window.open(explorerUrl, "_blank")
+  }, [account])
+
   const value = {
     account,
     chainId,
@@ -196,6 +198,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
     connectWallet,
     disconnectWallet,
     formatAddress,
+    viewOnExplorer,
   }
 
   return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>

@@ -72,7 +72,7 @@ contract InvestmentManager is AccessControl, Pausable {
         userInvestments[msg.sender] += etfAmount;
         
         // Lock SPAY as collateral
-        IERC20(spayToken).safeApprove(collateralManager, spayAmount);
+        IERC20(spayToken).approve(collateralManager, spayAmount);
         (bool lockSuccess, ) = collateralManager.call(
             abi.encodeWithSignature("lockCollateral(uint256)", spayAmount)
         );

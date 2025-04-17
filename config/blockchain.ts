@@ -26,20 +26,11 @@ export const DEFAULT_CHAIN = {
 
 // Pharos addresses start with "phr" instead of "0x"
 export const CONTRACT_ADDRESSES = {
-  SPAYStablecoin: "phr1234567890123456789012345678901234567890", // Replace with actual deployed address
-  ETFToken: "phr2345678901234567890123456789012345678901", // Replace with actual deployed address
-  CollateralManager: "phr3456789012345678901234567890123456789012", // Replace with actual deployed address
-  PayrollProcessor: "phr4567890123456789012345678901234567890123", // Replace with actual deployed address
-  InvestmentManager: "phr5678901234567890123456789012345678901234", // Replace with actual deployed address
-  SavingsManager: "phr6789012345678901234567890123456789012345", // Replace with actual deployed address
+  SPAY_TOKEN_CONTRACT: "0x60c977735cfBF44Cf5B33bD02a8B637765E7AbbB",
+  ETF_TOKEN_CONTRACT: "0x6157DCF5f7E0546706e7153AbEb2Fe48122bEec5",
+  SAVING_MANAGER_CONTRACT: "0x7d8940bAf8A432E09a30ce762abb3dD9Ab75eF3d",
+  PAYROLL_PROCESSOR: "0x0878f2D8fBC9a2E08E0d1076763376920AC91145",
+  COLLETRAL_MANAGER: "0x5aE2B46aeF46Ef33d8d91Da8519C9B9C898086DC",
+  INVESTMENT_MANAGER: "0x9bDA20E14700EbfD1B9A0900c3d54538F867bD59"
 }
 
-// Helper function to convert between Pharos and 0x address formats
-export const convertAddressFormat = (address: string): string => {
-  if (address.startsWith("phr")) {
-    return "0x" + address.slice(3)
-  } else if (address.startsWith("0x")) {
-    return "phr" + address.slice(2)
-  }
-  return address
-}

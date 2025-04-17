@@ -3,7 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import { toast } from "@/components/ui/use-toast"
-import { DEFAULT_CHAIN, convertAddressFormat } from "@/config/blockchain"
+import { DEFAULT_CHAIN } from "@/config/blockchain"
 
 // Define window.ethereum for TypeScript
 declare global {

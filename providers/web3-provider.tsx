@@ -17,10 +17,12 @@ type Web3ContextType = {
   chainId: number | null
   isConnecting: boolean
   isConnected: boolean
+  userRole: 'employer' | 'employee' | null
   connectWallet: () => Promise<void>
   disconnectWallet: () => void
   formatAddress: (address: string | null) => string
   viewOnExplorer: () => void
+  setUserRole: (role: 'employer' | 'employee' | null) => void
 }
 
 const Web3Context = createContext<Web3ContextType>({
@@ -28,10 +30,12 @@ const Web3Context = createContext<Web3ContextType>({
   chainId: null,
   isConnecting: false,
   isConnected: false,
+  userRole: null,
   connectWallet: async () => {},
   disconnectWallet: () => {},
   formatAddress: () => "",
   viewOnExplorer: () => {},
+  setUserRole: () => {},
 })
 
 export const useWeb3 = () => useContext(Web3Context)
@@ -41,6 +45,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
   const [chainId, setChainId] = useState<number | null>(null)
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
+  const [userRole, setUserRole] = useState<'employer' | 'employee' | null>(null)
 
   // Format address for display
   const formatAddress = useCallback((address: string | null): string => {
@@ -129,6 +134,10 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
     setAccount(null)
     setChainId(null)
     setIsConnected(false)
+    setUserRole(null)
+    
+    // Clear auth cookie
+    document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 
     toast({
       title: "Wallet Disconnected",
@@ -195,10 +204,12 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
     chainId,
     isConnecting,
     isConnected,
+    userRole,
     connectWallet,
     disconnectWallet,
     formatAddress,
     viewOnExplorer,
+    setUserRole,
   }
 
   return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>

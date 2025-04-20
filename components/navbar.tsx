@@ -10,10 +10,11 @@ import { DollarSign, Menu, X, Moon, Sun, ExternalLink } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useWeb3 } from "@/providers/web3-provider"
 import { useSPAYToken } from "@/hooks/use-spay-token"
-
+import { RoleSelectionModal } from "@/components/modals/role-selection-modal"
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [showRoleModal, setShowRoleModal] = useState(false)
   const { theme, setTheme } = useTheme()
   const { account, isConnected, isConnecting, connectWallet, disconnectWallet, formatAddress, viewOnExplorer } =
     useWeb3()
@@ -26,12 +27,13 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen)
 
   const navItems = [
-    { name: "Employer", href: "/employer" },
-    { name: "Employee", href: "/employee" },
-    { name: "Join Waitlist", href: "https://form.typeform.com/to/vcGRVShj" },
+    { name: "Join Waitlist", href: "https://form.typeform.com/to/tSPrvBHT" }
   ]
 
   return (
+    <>
+    
+  
     <motion.nav
       className="sticky top-0 z-50 glass-card backdrop-blur-lg border-b border-white/20 dark:border-white/10"
       initial={{ y: -100 }}
@@ -92,14 +94,24 @@ export function Navbar() {
               )}
 
               {!isConnected ? (
-                <GradientButton
-                  onClick={connectWallet}
-                  gradientFrom="#6366F1"
-                  gradientTo="#D946EF"
-                  disabled={isConnecting}
-                >
-                  {isConnecting ? "Connecting..." : "Connect Wallet"}
-                </GradientButton>
+                <>
+                  <GradientButton
+                    onClick={() => setShowRoleModal(true)}
+                    gradientFrom="#6366F1"
+                    gradientTo="#D946EF"
+                    disabled={isConnecting}
+                  >
+                    {isConnecting ? "Connecting..." : "Connect Wallet"}
+                  </GradientButton>
+                  <RoleSelectionModal
+                    isOpen={showRoleModal}
+                    onClose={() => setShowRoleModal(false)}
+                    onSuccess={async () => {
+                      await connectWallet();
+                      setShowRoleModal(false);
+                    }}
+                  />
+                </>
               ) : (
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" className="gap-1" onClick={() => viewOnExplorer()}>
@@ -111,6 +123,7 @@ export function Navbar() {
                     size="sm" 
                     className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
                     onClick={() => {
+                      setShowRoleModal(false);
                       disconnectWallet();
                       document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
                       window.location.href = "/";
@@ -168,15 +181,25 @@ export function Navbar() {
               )}
 
               {!isConnected ? (
-                <GradientButton
-                  onClick={connectWallet}
-                  gradientFrom="#6366F1"
-                  gradientTo="#D946EF"
-                  className="mt-2"
-                  disabled={isConnecting}
-                >
-                  {isConnecting ? "Connecting..." : "Connect Wallet"}
-                </GradientButton>
+                <>
+                  <GradientButton
+                    onClick={() => setShowRoleModal(true)}
+                    gradientFrom="#6366F1"
+                    gradientTo="#D946EF"
+                    className="mt-2"
+                    disabled={isConnecting}
+                  >
+                    {isConnecting ? "Connecting..." : "Connect Wallet"}
+                  </GradientButton>
+                  <RoleSelectionModal
+                    isOpen={showRoleModal}
+                    onClose={() => setShowRoleModal(false)}
+                    onSuccess={async () => {
+                      await connectWallet();
+                      setShowRoleModal(false);
+                    }}
+                  />
+                </>
               ) : (
                 <div className="flex flex-col gap-2 mt-2">
                   <Button variant="outline" size="sm" className="gap-1 justify-center" onClick={() => viewOnExplorer()}>
@@ -188,11 +211,14 @@ export function Navbar() {
                     <span>{spayToken?.balance || "0"} SPAY</span>
                   </div>
                 </div>
-              )}
+              )
+            }
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </motion.nav>
+    </>
   )
 }

@@ -6,7 +6,7 @@ import SPAYStablecoinABI from './abis/SPAYStablecoin.json';
 import ETFTokenABI from './abis/ETFToken.json';
 import PayrollProcessorABI from './abis/PayrollProcessor.json';
 import CollateralManagerABI from './abis/CollateralManager.json';
-import InvestmentManagerABI from './abis/InvestmentManager.json';
+import InvestmentManagerABI from './abis/Investmentmanager.json';
 import SavingsManagerABI from './abis/SavingsManager.json';
 
 // Import contract addresses from config

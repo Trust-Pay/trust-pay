@@ -92,16 +92,8 @@ async function fetchNYTNews(section = 'world'): Promise<Article[]> {
 }
 // Combine articles from all sources
 async function getAllNews(): Promise<Article[]> {
-  const [newsAPI, guardian, chainlink, nyt] = await Promise.all([
-    fetchNewsAPI(),
-    fetchGuardianNews(),
-    fetchChainLinkNews(),
-    fetchNYTNews(),
-  ]);
-
-  const allArticles = [...newsAPI, ...guardian, ...chainlink, ...nyt];
-  allArticles.sort((a, b) => a.title.localeCompare(b.title));
-  return allArticles;
+  const chainlink = await fetchChainLinkNews()
+  return chainlink;
 }
 
 

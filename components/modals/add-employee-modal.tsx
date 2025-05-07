@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Input } from "@/components/ui/input"
 import { GradientButton } from "@/components/ui/gradient-button"
 import { PlusCircle } from "lucide-react"
+import { handleEmployeeRegistration } from "@/app/actions/employee-registration"
+import { useToast } from "@/components/ui/use-toast"
 
 interface AddEmployeeModalProps {
   isOpen: boolean
@@ -19,6 +21,7 @@ interface AddEmployeeModalProps {
 }
 
 export function AddEmployeeModal({ isOpen, onClose, onSubmit, isProcessing }: AddEmployeeModalProps) {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -26,15 +29,43 @@ export function AddEmployeeModal({ isOpen, onClose, onSubmit, isProcessing }: Ad
     schedule: "Bi-weekly",
   })
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log("address for here:", formData.address)
     if (!formData.name || !formData.address || !formData.amount) return
-    onSubmit(formData)
-    setFormData({
-      name: "",
-      address: "",
-      amount: "",
-      schedule: "Bi-weekly",
-    })
+    
+    try {
+      const result = await handleEmployeeRegistration(
+        formData.address, 
+        formData
+      )
+      console.log("Registration result:", result)
+
+      if (result.success) {
+        onSubmit(formData)
+        setFormData({
+          name: "",
+          address: "",
+          amount: "",
+          schedule: "Bi-weekly",
+        })
+        toast({
+          title: "Success",
+          description: "Employee registered successfully",
+        })
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: result.error || "Failed to register employee",
+        })
+      }
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message || "Failed to register employee",
+      })
+    }
   }
 
   return (

@@ -2,8 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+// Removed Navbar and Footer imports for employee dashboard
 import { GlassCard } from "@/components/ui/glass-card"
 import { GradientButton } from "@/components/ui/gradient-button"
 import { Button } from "@/components/ui/button"
@@ -58,8 +57,6 @@ export default function EmployeeDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
-      <Navbar />
-
       <main className="flex-grow py-8">
         <div className="container mx-auto px-4">
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="space-y-8">
@@ -687,7 +684,6 @@ export default function EmployeeDashboard() {
         </div>
       </main>
 
-      <Footer />
     </div>
   )
 }

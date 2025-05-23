@@ -11,7 +11,6 @@ const News = () => {
         hasFetched.current = true;
         fetch('/api/news')
             .then((res) => res.json())
-            .then((data) => setNews(data))
             .catch((error) => console.error('Error fetching news:', error));
     }, []);
 

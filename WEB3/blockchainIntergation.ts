@@ -43,6 +43,7 @@ export async function initializeBlockchain(): Promise<BlockchainContracts> {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send('eth_requestAccounts', []); // Request account access
     const signer = provider.getSigner();
+    console.log("signer",signer)
 
     const spayToken = new Contract(
       CONTRACT_ADDRESSES.SPAY_TOKEN_CONTRACT,
